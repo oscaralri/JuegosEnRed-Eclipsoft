@@ -1,5 +1,5 @@
 # Juegos En Red - Eclipsoft
-Lautaro Berruezo, Gustavo Herrero, Óscar Alarcón, Jorge Sanz
+Lautaro Berruezo, Gustavo Herrero, Óscar Alarcón y Jorge Sanz.
 
 ![eclipsoftlogo](https://user-images.githubusercontent.com/33161767/196520005-4d49a613-dd8f-48f9-af78-ef7ce9e73b78.png)
 
@@ -9,7 +9,7 @@ Lautaro Berruezo, Gustavo Herrero, Óscar Alarcón, Jorge Sanz
 
 
 ## 1.Introducción
-Este es el documento de diseño de “Alterune”, un videojuego multijugador para PC basado en la obra indie de Toby Fox “Undertale”. Este documento tiene como finalidad representar la idea y las bases del juego; así como entender cómo funciona.
+Este es el documento de diseño de “Alterdune”, un videojuego multijugador para PC basado en la obra indie de Toby Fox “Undertale”. Este documento tiene como finalidad representar la idea y las bases del juego; así como entender cómo funciona.
 
 ### 1.1. Concepto del juego
 Alterdune es un juego multijugador de dos jugadores que consistirá en combates a muerte entre dos jugadores. En los combates se podrá atacar y esquivar al adversario. Se podrá escoger entre el bando de los humanos y el de los monstruos, pero sólo uno prevalecerá sobre el otro.
@@ -69,51 +69,51 @@ Forgotten
 El movimiento será el simple movimiento de un juego RPG, el personaje que se controle podrá moverse hacia arriba, abajo, derecha e izquierda.
 Habrá algún que otro puzzle antes de llegar al centro del mapa por lo que el personaje que se esté controlando tendrá que interactuar con ciertos obstáculos en su entorno para llegar al final.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## 3. Interfaz
 
 ### 3.1 Diagrama de flujo
 El siguiente diagrama de estados muestra las pantallas presentes a lo largo de Alterdune y las transiciones entre ellas. En puntos posteriores nos centraremos en ellas detenidamente.
 ![int1](https://user-images.githubusercontent.com/33161767/196520246-2039ddc8-a869-40d9-b004-62f94b6ff53c.png)
 
-### 3.2 Menú principal![int2](https://user-images.githubusercontent.com/33161767/196520724-578c1b91-21fe-492d-919c-e724fbbce74d.png)
-Botones
+### 3.2 Menú principal
+![int2](https://user-images.githubusercontent.com/33161767/196520724-578c1b91-21fe-492d-919c-e724fbbce74d.png)
+
+##### Botones
+
 Botón jugar: al ser pulsado lleva a la interfaz Selección de personaje.
+
 Botón salir: al ser pulsado lleva al sistema operativo.
-Transición fundido a negro.Botones
+
+Transición fundido a negro.
+
 ![int3](https://user-images.githubusercontent.com/33161767/196520790-37f1e215-4f49-42d6-886a-b839ec8b1479.png)
 
+##### Botones
+
 Botón jugador 1: Al ser pulsado se debe seleccionar el personaje a ser jugado.
+
 Botón jugador 2: Al ser pulsado se debe seleccionar el personaje a ser jugado.
+
 Botón aceptar: Al ser pulsado lleva a la interfaz de Laberinto. Uso de transición de tipo cinemática, en la que se presenta el escenario en cuestión.
+
 Botón Volver: Al ser pulsado lleva a la interfaz de Menú principal. Uso de transición de fundido a negro.
 
 ### 3.3 Interfaz Laberinto
 ![int4](https://user-images.githubusercontent.com/33161767/196520844-dc7ad65e-a997-4e95-a042-fd800f962057.png)
 
-Botones
+##### Botones
+
 Entrada por teclado.
+
 Cuando uno de los jugadores llega al centro, se produce una transición a la interfaz de combate de tipo cinemática; en la cual se muestran a los combatientes y el cambio de escenario.
+
 3.4 Interfaz Combate
 ![int5](https://user-images.githubusercontent.com/33161767/196520921-8cb1da9e-df16-4009-8c55-98aa3dcd5e94.png)
 
-Botones
+##### Botones
+
 Entrada por teclado.
+
 Al finalizar la partida vuelve a la pantalla de selección de personaje con una cinemática de fundido a negro.
 
 
@@ -123,34 +123,35 @@ La estética de Alterdune va a tomar como referencia la de otro videojuego llama
 El arte del juego va a ser enteramente en pixel art y estará basado generalmente en la imagen de título de abajo.
 Todo el arte del videojuego va a ser realizado con la herramienta Aseprite para pixel art.
 
-
-
-
-
-
-
-
 Por ahora el equipo de desarrollo posee sprites para las almas y un pequeño fondo para el menú: 
 
-fondo
+![fondo](https://user-images.githubusercontent.com/33161767/196521463-3bf29a3c-6443-4cb9-b155-3cd84ca6b2df.png)
+
 A la izquierda está lo que sería el sprite para las almas. Este se podrá elegir de distintos colores, pero el naranja será el predeterminado.
 
 
-
-
-
 ### 4.1. Arte 2D
-Los elementos que se querrán utilizar en el juego serán:
+##### Los elementos que se querrán utilizar en el juego serán:
+
 Mapa base 2d visto desde arriba basado en un sitio desértico
+
 Varios personajes humanos en pixel art (con su modo de combate)
+
 Varios personajes monstruos en pixel art (con sus ataques)
+
 Fondo de menu principal
+![sprite](https://user-images.githubusercontent.com/33161767/196521554-f510c594-6347-4ffe-83db-b6559f992f65.png)
 
 
 ### 4.2. Audio
-Elementos auditivos que se necesitarán son:
+##### Elementos auditivos que se necesitarán son:
+
 Sonido de daño recibido
+
 Sonido de daño causado 
+
 Sonidos de ataques
+
 Música para las batallas y de fondo
+
 Sonidos varios para fuera de combate (hablar con personajes, eventos, etc)
