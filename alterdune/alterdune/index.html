@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterdune</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+
+</head>
+
+<body>
+    <div id="alterdune"></div>
+    <script type="module" src="js/alterdune.js"></script>
+
+    <script type="text/javascript">
+        var player1;
+        var player2;
+        var cursors;
+        var keys;
+
+        var spikes;
+        var hitbox;
+        var contador;
+
+        /*
+        var camCruz;
+        var camDer;
+        var camIzq;
+        var camRec;
+        var camNo; 
+        */
+
+        var muro;
+
+        var music;
+        var hitSound;
+
+        var distance;
+
+        function hit() {
+            if (contador < 1) {
+                player1.setTint(0xff6a6a);
+                player1.setPosition(500, 450);
+                contador++;
+                hitSound.play();
+            }
+
+            else if (contador < 2) {
+                player1.setTint(0xff2e2e);
+                player1.setPosition(500, 450);
+                contador ++;
+                hitSound.play();
+            }
+
+            else {
+                /* player1.setTint(0x0dff00);
+                player1.setPosition(500, 450); */
+                this.scene.start('gameOver');
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
