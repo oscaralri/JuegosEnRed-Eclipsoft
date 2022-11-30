@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterdune</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+
+</head>
+
+<body>
+    <div id="alterdune"></div>
+    <script type="module" src="js/alterdune.js"></script>
+
+    <script type="text/javascript">
+        var player1;
+        var player2;
+        var cursors;
+        var keys;
+        var color1;
+        var color2;
+        var animacion1;
+        var buttonSound;
+        var carpet;
+
+         //spikes
+        var spikes1;
+        var spikes2;
+        var spikes3;
+        var spikes4;
+        var spikes5;
+        var spikes6;
+        var spikes7;
+
+        //hitbox
+        var hitbox;
+        var hitSound;
+        var hitboxSal;
+
+
+        //escnario
+        var walls;
+        var carpet;
+        var music;
+        var buttonSound;
+
+        //utilidades
+        var distance;
+        var animacion;
+        var contador;
+
+        var walls;
+        var music;
+        var hitSound;
+        var distance;
+
+        function salida() {
+            this.scene.start('salidaScene');
+        }
+
+        function hit() {
+            if (contador < 1) {
+                player1.setVelocityX(0);
+                player1.setVelocityY(0);
+                player1.setTint(0xff6a6a);
+                player1.setPosition(125, 1300);
+                player2.setTint(0xff6a6a);
+                player2.setPosition(175, 1300);
+                contador++;
+                hitSound.play();
+            }
+
+            else if (contador < 2) {
+                player1.setVelocityX(0);
+                player1.setVelocityY(0);
+                player1.setTint(0xff2e2e);
+                player1.setPosition(125, 1300);
+                player2.setVelocityX(0);
+                player2.setVelocityY(0);
+                player2.setTint(0xff2e2e);
+                player2.setPosition(150, 1300);
+                contador ++;
+                hitSound.play();
+            }
+
+            else {
+                player1.setVelocityX(0);
+                player1.setVelocityY(0);
+                player2.setVelocityX(0);
+                player2.setVelocityY(0);
+                this.scene.start('gameOver');
+            }
+
+        }
+
+        
+        function cambioScene() { this.scene.start('MainScene');}
+    </script>
+</body>
+
+</html>
