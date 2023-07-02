@@ -6,6 +6,7 @@ import Inicio from "./Inicio.js";
 import menuScene from "./menuScene.js";
 import seleccionPj from "./seleccionPj.js";
 
+
 const config = {
     type: Phaser.AUTO,
     parent: 'alterdune',
@@ -34,4 +35,5 @@ const config = {
     pixelArt: true,
 }
 
-new Phaser.Game(config);
+const game=new Phaser.Game(config);
+

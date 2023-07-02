@@ -1,3 +1,4 @@
+
 export default class seleccionScene extends Phaser.Scene {
 
 
@@ -14,7 +15,8 @@ export default class seleccionScene extends Phaser.Scene {
 
         //boton jugar
         this.load.image('jugar', 'assets/Menu/play.png')
-
+       //boton usuario
+        this.load.image('user', 'assets/Menu/userButton.png')
         //flechas
 		this.load.image('cursor', 'assets/Menu/cursor.png');
         this.load.image('cursor2', 'assets/Menu/cursor2.png');
@@ -162,12 +164,281 @@ export default class seleccionScene extends Phaser.Scene {
         .on('pointerdown', () => { this.scene.start('menuScene')})
         .on('pointerover', () =>{back.setTint(0xFFA3A3 )} )
         .on('pointerout', () => {back.clearTint()} );
+        
+        
+        
+		/////////////////////BOTON DE USUARIO/////////////////
+	
 
-		const userButton = this.add.image(700, 550, 'cursor').setScale(1)
+
+
+	
+	
+	//DESAPARECE LA VENTANA SOLO UNA VEZ. SIGUE SIENDO AJAX (Sin el if). (CON EL IF DE SI SU PADRE ES EL DOM FUNCIONA)
+		const userButton = this.add.image(700, 550, 'user').setScale(0.1)
+  .setInteractive()
+  .on('pointerdown', () => {
+    const nameFormContainer = document.createElement('div');
+    nameFormContainer.innerHTML = `
+      <iframe src="/nameForm.html" width="25%" height="30%" frameborder="10"></iframe>
+    `;
+    nameFormContainer.style.position = 'absolute';
+    nameFormContainer.style.top = '20%';
+    nameFormContainer.style.left = '30%';
+    nameFormContainer.style.width = '100%';
+    nameFormContainer.style.height = '100%';
+    document.body.appendChild(nameFormContainer);
+
+    userButton.disableInteractive(); // Desactivar el botón mientras se muestra el formulario
+
+    const closeForm = () => {
+		if (nameFormContainer.parentNode === document.body) {
+	    document.body.removeChild(nameFormContainer);
+	    userButton.setInteractive(); // Volver a habilitar el botón después de cerrar el formulario
+	  	}
+    };
+
+    const handleMessage = (event) => {
+      if (event.data === 'closeForm') {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+      }
+      if (event.data === 'guardadoExitoso') {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+        // Aquí puedes realizar alguna acción adicional después de guardar el nombre exitosamente
+      }
+    };
+
+    // Escuchar mensajes del formulario para cerrar el formulario y manejar la respuesta de guardado exitoso
+    window.addEventListener('message', handleMessage);
+
+    const handleClick = (event) => {
+      const isInsideForm = nameFormContainer.contains(event.target);
+      const isUserButton = event.target === userButton;
+
+      if (!isInsideForm && !isUserButton) {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+      }
+    };
+
+    // Evento para cerrar el formulario cuando se hace clic fuera de él
+    this.input.on('pointerdown', handleClick);
+
+    const iframeWindow = nameFormContainer.querySelector('iframe').contentWindow;
+
+    // Enviar el formulario dentro del iframe mediante AJAX
+    iframeWindow.addEventListener('DOMContentLoaded', () => {
+      const form = iframeWindow.document.querySelector('form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evitar que el formulario se envíe normalmente
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/saveName');
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            iframeWindow.postMessage('guardadoExitoso', '*'); // Enviar mensaje de guardado exitoso al iframe
+          }
+        };
+        xhr.send(formData);
+      });
+    });
+  })
+  .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
+  .on('pointerout', () => { userButton.clearTint(); });
+
+		
+		
+	//NO CREA SEGUNDA INSTANCIA, SE USA AJAX PARA ELLO. PERO NO DESPARACE LA VENTANA.
+	/*const userButton = this.add.image(700, 550, 'user').setScale(0.1)
+  .setInteractive()
+  .on('pointerdown', () => {
+    const nameFormContainer = document.createElement('div');
+    nameFormContainer.innerHTML = `
+      <iframe src="/nameForm.html" width="18%" height="30%" frameborder="10"></iframe>
+    `;
+    nameFormContainer.style.position = 'absolute';
+    nameFormContainer.style.top = '20%';
+    nameFormContainer.style.left = '18%';
+    nameFormContainer.style.width = '100%';
+    nameFormContainer.style.height = '100%';
+    document.body.appendChild(nameFormContainer);
+
+    userButton.disableInteractive(); // Desactivar el botón mientras se muestra el formulario
+
+    const closeForm = () => {
+      document.body.removeChild(nameFormContainer);
+      userButton.setInteractive(); // Volver a habilitar el botón después de cerrar el formulario
+    };
+
+    const handleMessage = (event) => {
+      if (event.data === 'closeForm') {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+      }
+      if (event.data === 'guardadoExitoso') {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+        // Aquí puedes realizar alguna acción adicional después de guardar el nombre exitosamente
+      }
+    };
+
+    // Escuchar mensajes del formulario para cerrar el formulario y manejar la respuesta de guardado exitoso
+    window.addEventListener('message', handleMessage);
+
+    const handleClick = (event) => {
+      const isInsideForm = nameFormContainer.contains(event.target);
+      const isUserButton = event.target === userButton;
+
+      if (!isInsideForm && !isUserButton) {
+        closeForm();
+        window.removeEventListener('message', handleMessage);
+      }
+    };
+
+    // Evento para cerrar el formulario cuando se hace clic fuera de él
+    this.input.on('pointerdown', handleClick);
+
+    const iframeWindow = nameFormContainer.querySelector('iframe').contentWindow;
+
+    // Enviar el formulario dentro del iframe mediante AJAX
+    iframeWindow.addEventListener('DOMContentLoaded', () => {
+      const form = iframeWindow.document.querySelector('form');
+      form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Evitar que el formulario se envíe normalmente
+        const formData = new FormData(form);
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/saveName');
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            iframeWindow.postMessage('guardadoExitoso', '*'); // Enviar mensaje de guardado exitoso al iframe
+          }
+        };
+        xhr.send(formData);
+      });
+    });
+  })
+  .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
+  .on('pointerout', () => { userButton.clearTint(); });*/
+
+
+		
+		//NO SE PUEDE CERRAR LA VENTANA Y DESPUÉS VOLVER A ABRIRLA.
+		/*const userButton = this.add.image(700, 550, 'user').setScale(0.1)
+	  .setInteractive()
+	  .on('pointerdown', () => {
+	    const nameFormContainer = document.createElement('div');
+	    nameFormContainer.innerHTML = `
+	      <iframe src="/nameForm.html" width="18%" height="30%" frameborder="10"></iframe>
+	    `;
+	    nameFormContainer.style.position = 'absolute';
+	    nameFormContainer.style.top = '20%';
+	    nameFormContainer.style.left = '18%';
+	    nameFormContainer.style.width = '100%';
+	    nameFormContainer.style.height = '100%';
+	    document.body.appendChild(nameFormContainer);
+	
+	    userButton.disableInteractive(); // Desactivar el botón mientras se muestra el formulario
+	
+	    const closeForm = () => {
+	      document.body.removeChild(nameFormContainer);
+	      userButton.setInteractive(); // Volver a habilitar el botón después de cerrar el formulario
+	    };
+	
+	    const handleMessage = (event) => {
+	      if (event.data === 'closeForm') {
+	        closeForm();
+	        window.removeEventListener('message', handleMessage);
+	      }
+	    };
+	
+	    // Escuchar mensajes del formulario para cerrar el formulario
+	    window.addEventListener('message', handleMessage);
+	
+	    const handleClick = (event) => {
+	      const isInsideForm = nameFormContainer.contains(event.target);
+	      const isUserButton = event.target === userButton;
+	
+	      if (!isInsideForm && !isUserButton) {
+	        closeForm();
+	        window.removeEventListener('message', handleMessage);
+	      }
+	    };
+	
+	    // Evento para cerrar el formulario cuando se hace clic fuera de él
+	    this.input.on('pointerdown', handleClick);
+	  })
+	  .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
+	  .on('pointerout', () => { userButton.clearTint(); });*/
+
+		//FUNCIONA PERO SE CREA OTRA INSTANCIA DEL JUEGO AL 'GUARDAR'
+		/*const userButton = this.add.image(775, 550, 'cursor').setScale(1)
+	  .setInteractive()
+	  .on('pointerdown', () => {
+	    const nameFormContainer = document.createElement('div');
+	    nameFormContainer.innerHTML = `
+	      <iframe src="/nameForm.html" width="18%" height="30%" frameborder="10"></iframe>
+	    `;
+	    nameFormContainer.style.position = 'absolute';
+	    nameFormContainer.style.top = '20%';
+	    nameFormContainer.style.left = '18%';
+	    nameFormContainer.style.width = '100%';
+	    nameFormContainer.style.height = '100%';
+	    document.body.appendChild(nameFormContainer);
+	
+	    userButton.disableInteractive(); // Desactivar el botón mientras se muestra el formulario
+	
+	    const closeForm = () => {
+	      document.body.removeChild(nameFormContainer);
+	      userButton.setInteractive(); // Volver a habilitar el botón después de cerrar el formulario
+	    };
+	
+	    const handleClick = (event) => {
+	      const isInsideForm = nameFormContainer.contains(event.target);
+	      const isUserButton = event.target === userButton;
+	
+	      if (!isInsideForm && !isUserButton) {
+	        closeForm();
+	        this.input.off('pointerdown', handleClick); // Eliminar el evento después de cerrar el formulario
+	      }
+	    };
+	
+	    // Evento para cerrar el formulario cuando se hace clic fuera de él
+	    this.input.on('pointerdown', handleClick);
+	  })
+	  .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
+	  .on('pointerout', () => { userButton.clearTint(); });*/
+
+
+//FUNCIONA PERO NO EN POSICION.
+		/*const userButton = this.add.image(775, 550, 'cursor').setScale(1)
+    .setInteractive()
+    .on('pointerdown', () => { 
+        const nameFormContainer = document.getElementById('nameFormContainer');
+        if (nameFormContainer.style.display === 'none') {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'nameForm.html', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    nameFormContainer.innerHTML = xhr.responseText;
+                    nameFormContainer.style.display = 'block';
+                }
+            };
+            xhr.send();
+        } else {
+            nameFormContainer.style.display = 'none';
+        }
+    })
+    .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
+    .on('pointerout', () => { userButton.clearTint(); });*/
+
+//FUNCIONA PERO LLEVA A OTRA VENTANA
+		/*const userButton = this.add.image(700, 550, 'cursor').setScale(1)
 		    .setInteractive()
 		    .on('pointerdown', () => { window.location.href = '/nameForm'; })
 		    .on('pointerover', () => { userButton.setTint(0xFFA3A3); })
-		    .on('pointerout', () => { userButton.clearTint(); });
+		    .on('pointerout', () => { userButton.clearTint(); });*/
     }
 
     update(){

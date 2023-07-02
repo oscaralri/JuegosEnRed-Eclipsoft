@@ -7,11 +7,19 @@
     <title>Alterdune</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.js"></script>
     <script src="GridEngine.min.js"></script>
-
+ 	<script src="jquery/jquery-3.7.0.min.js"></script>
+ 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <div id="alterdune"></div>
+    <style>
+    #nameFormContainer {
+        display: none;
+    }
+	</style>
+    <div id="nameFormContainer" style="display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+	</div>
 	<script type="module" src="/js/alterdune.js"></script>
 
     <script type="text/javascript">
